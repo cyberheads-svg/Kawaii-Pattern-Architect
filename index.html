@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Pattern Architect — Kawaii & Surface</title>
+<title>Pattern Architect — Surface Only</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap');
   :root{
@@ -70,13 +70,13 @@
 <body>
 
 <header>
-  <div class="eyebrow">Creative Surface / v1.2</div>
+  <div class="eyebrow">Surface Studio / v1.3</div>
   <h1 id="mainTitle">Pattern <span>Architect</span></h1>
   <div class="counter" id="count">0000 GENERATED</div>
 </header>
 
 <div class="selector-group">
-  <div class="selector-label">Style Mode</div>
+  <div class="selector-label">Surface Mode</div>
   <div class="selector" id="styleSelector">
     <button class="selector-btn active" data-style="kawaii">Kawaii Pop</button>
     <button class="selector-btn" data-style="geometric">Geometric</button>
@@ -96,56 +96,56 @@
   </div>
   
   <hr class="divider">
-  <div class="prompt-label">AI Architecture Prompt</div>
-  <textarea class="prompt-textarea" id="prompt" readonly placeholder="Select mode & build..."></textarea>
+  <div class="prompt-label">Surface Design Prompt</div>
+  <textarea class="prompt-textarea" id="prompt" readonly placeholder="Select mode & build texture..."></textarea>
   <div class="action-bar">
     <button class="copy-btn" id="copyBtn">Copy</button>
     <button class="save-btn" id="saveBtn" style="display:none">Save</button>
   </div>
 </div>
 
-<button class="generate-btn" id="generateBtn">GENERATE ARCHITECTURE</button>
+<button class="generate-btn" id="generateBtn">GENERATE SURFACE</button>
 
 <div class="saved-section" id="savedSection" style="display:none">
-  <div class="saved-title">Stored Patterns</div>
+  <div class="saved-title">Saved Textures</div>
   <div id="savedList"></div>
 </div>
 
-<footer>&copy; 2026 Studio Architect // Pattern Series</footer>
+<footer>&copy; 2026 Studio Architect // Non-Character Pattern Edition</footer>
 
 <script>
 const DATA = {
   kawaii: {
-    motif: ["chibi pastel animals with big eyes","strawberry milk maidens","dreamy clouds and rainbow hearts","floating desserts and sweets","magical girl crystals","fluffy bunny ear hoodies","broken doll stitches and tears","black tears with pastel pink","90s anime sparkles and stars","y2k star and heart chain","cat ear silhouettes and paw prints","sakura petals falling","plush toy mountain","kawaii ghost friends","pastel horror cute motifs"],
-    structure: ["dense seamless repeating pattern","floating scattered arrangement","diagonal candy stripe layout","bubble wrap grid","heart-shaped tessellation","uniform isometric kawaii grid","layered overlapping elements","scalloped border frame","checkerboard with cute icons"],
-    palette: ["yumekawaii pastel explosion","strawberry milk pink & cream","cyber kawaii neon","soft girl mint & lavender","pastel goth black & pink","shoujo manga rose & mint","menhera dark kawaii","angel core white & gold"],
-    vibe: ["extremely healing and soft","hyper feminine and dreamy","chaotic cute energy","nostalgic 90s-2000s","slightly menhera and emotional","bright and energetic","elegant princess-like","street fashion kawaii"],
-    details: ["sparkling glitter and stars","blush stickers and hearts","lace and ribbon details","halftone screen tone","puffy 3D sticker look","manga speech bubbles with 'kyaa!'","heart-shaped dialogue box","sparkling thought bubble","anger vein bubbles","comic book onomatopoeia"],
-    medium: ["clean vector kawaii illustration","90s anime cel-shading","soft pastel gouache","3D cute render","digital sticker sheet","shoujo manga screen tone","y2k flash art style","cute 3D clay model render"]
+    motif: ["floating ribbon bows and lace", "glittering star and heart shapes", "dreamy pastel clouds", "creamy dessert icons", "magical girl transformation wand silhouettes", "strawberry milk drops", "cherry and sparkle symbols", "pastel gemstone clusters", "fancy stationery aesthetic icons", "soft-serve ice cream swirls", "puffy cotton candy forms"],
+    structure: ["dense seamless tile", "scattered floating arrangement", "diagonal candy stripes", "bubble wrap grid", "radial heart layout", "checkered cute icons", "interlocking ribbon waves"],
+    palette: ["yumekawaii lavender & mint", "strawberry milk pink & cream", "classic fancy pastel blue", "neon cyber-pink & blue", "soft peach & lavender", "angel core white & gold"],
+    vibe: ["soft and dreamy", "sentimental and nostalgic", "chaotic but cute", "extremely healing", "sweet and airy", "shoujo-manga aesthetic"],
+    details: ["sparkling glitter dust", "blush-pink airbrushing", "pearl sheen highlights", "delicate lace edges", "puffy 3D sticker finish", "manga speech bubbles (no characters)", "sparkling thought bubbles", "halftone heart textures"],
+    medium: ["vector kawaii illustration", "90s anime cel-shading style", "soft pastel gouache", "3D cute matte render", "digital sticker sheet style", "risograph pastel print"]
   },
   geometric: {
-    motif: ["bauhaus shapes","isometric blocks","interlocking polygons","circular mandalas","optical illusion grids","minimalist line art","sacred geometry","wireframe 3D cubes"],
-    structure: ["perfectly symmetrical grid","radial burst alignment","diagonal rhythmic repetition","hexagonal tiling","fractal expansion","concentric circles","staggered offset layout"],
-    palette: ["high-contrast monochrome","primary color theory","neon cyberpunk glow","muted earth and charcoal","gold, black, and white","deep navy and copper"],
-    vibe: ["intellectual and sharp","rhythmic and steady","complex and mathematical","stable and industrial","dynamic movement","ultra-modernist"],
-    details: ["sharp vector edges","mathematical precision","subtle drop shadows","glowing wireframe accents","layered transparency","matte surface finish"],
-    medium: ["clean vector design","3D architectural render","screen print style","generative digital art","blueprint aesthetic"]
+    motif: ["bauhaus geometric primitives", "hexagonal honeycomb cells", "concentric circular ripples", "isometric wireframe cubes", "interlocking chevrons", "sacred geometry mandalas", "op-art optical waves"],
+    structure: ["mathematically precise grid", "radial symmetry", "dense fractal repetition", "tessellated polygon tiling", "staggered offset layout", "linear rhythmic alignment"],
+    palette: ["monochrome high-contrast", "primary colors (CMYK)", "neon cyberpunk glow", "muted clay and charcoal", "gold and matte black", "electric blue and silver"],
+    vibe: ["intellectual and structured", "aggressive and rhythmic", "complex and analytical", "stable industrial look", "dynamic architectural movement"],
+    details: ["sharp vector edges", "mathematical line precision", "subtle drop shadows", "glowing neon wireframes", "layered transparency", "technical blueprint grain"],
+    medium: ["clean vector design", "3D architectural render", "screen print style", "generative digital art", "precise plotter drawing"]
   },
   pop: {
-    motif: ["vibrant sticker bomb","bubblegum typography","retro comic dots","y2k cyber-bling","kitsch leopard print","80s arcade icons","bold street graffiti fragments"],
-    structure: ["chaotic overlapping layout","bold comic panel grid","random burst composition","diagonal stripe background","scattered sticker arrangement"],
-    palette: ["acid neon synthwave","bubblegum pink and cyan","primary pop yellow/red","vivid vaporwave gradient","80s arcade palette"],
-    vibe: ["loud and high-energy","street and underground","playful and nostalgic","ironic and kitsch","commercial pop style"],
-    details: ["thick black outlines","ben-day halftone dots","glossy plastic highlights","distressed vintage grain","glitch chromatic aberration"],
-    medium: ["pop art illustration","vintage comic print","risograph texture","vector sticker art","screen print"]
+    motif: ["bold halftone dots", "y2k bling star shapes", "retro arcade pixel patterns", "vibrant sticker-style fragments", "bubblegum abstract squiggles", "comic book explosion bursts", "street graffiti texture fragments"],
+    structure: ["chaotic overlapping layers", "diagonal bold stripes", "random burst arrangement", "scattered pop icons", "tiling sticker bomb"],
+    palette: ["vivid neon synthwave", "bubblegum pink and yellow", "acid green and purple", "high-contrast red and blue", "retro 80s arcade colors"],
+    vibe: ["loud and energetic", "playful and ironic", "noisy and street", "underground pop style", "nostalgic 80s arcade"],
+    details: ["thick black ink outlines", "ben-day comic dots", "glossy plastic highlights", "chromatic aberration", "distressed paper texture", "onomatopoeia text graphics"],
+    medium: ["pop art illustration", "vintage comic print", "risograph texture", "vector sticker art", "screen print style"]
   },
   minimal: {
-    motif: ["subtle terrazzo specks","thin contour lines","japanese sashiko stitching","soft gradient mesh","zen garden ripples","minimalist stipple dots"],
-    structure: ["sparse open space","uniform micro-grid","seamless subtle tiling","perfectly centered motif","asymmetric negative space"],
-    palette: ["warm beige and cream","cool slate greys","monochrome ink wash","soft wabi-sabi tones","pale oat and charcoal"],
-    vibe: ["silent and pure","sophisticated and calm","airy and structured","precise and empty","natural and tranquil"],
-    details: ["ultra-fine lines","perfect negative space","soft focus edges","matte paper texture","subtle depth of field"],
-    medium: ["minimalist vector","subtle 3D texture","pencil drawing","riso-print style","architectural sketch"]
+    motif: ["subtle terrazzo specks", "thin topographic lines", "sashiko stitch marks", "soft gradient grain", "microscopic dot grid", "gentle organic ripples"],
+    structure: ["sparse open layout", "uniform micro-grid", "seamless subtle tiling", "asymmetric negative space", "perfectly balanced emptiness"],
+    palette: ["muted wabi-sabi tones", "warm beige and linen", "cool slate and ash", "monochrome ink wash", "pale oat and charcoal"],
+    vibe: ["silent and pure", "sophisticated and calm", "airy and structured", "precise and tranquil", "modernist emptiness"],
+    details: ["ultra-fine thin lines", "matte paper texture", "soft-focus blurred edges", "perfect negative space", "subtle depth and shadow"],
+    medium: ["minimalist vector art", "subtle 3D texture", "pencil and graphite sketch", "riso-print aesthetic", "clean digital surface"]
   }
 };
 
@@ -158,14 +158,14 @@ const CONFIG = {
 
 let selectedStyle = 'kawaii';
 let current = {};
-let count = parseInt(localStorage.getItem('arch_count') || '0', 10);
+let count = parseInt(localStorage.getItem('arch_count_v13') || '0', 10);
 
 const $ = id => document.getElementById(id);
 const rand = arr => arr[Math.floor(Math.random()*arr.length)];
 
 function updateCount() {
   $('count').textContent = count.toString().padStart(4, '0') + " GENERATED";
-  localStorage.setItem('arch_count', count);
+  localStorage.setItem('arch_count_v13', count);
 }
 
 function setStyle(key) {
@@ -192,7 +192,7 @@ function renderFields() {
     el.closest('.field-row').classList.add('animate-in');
   });
 
-  const p = `${current.motif}, ${current.structure}, color palette: ${current.palette}, ${current.details}, vibe: ${current.vibe}, ${current.medium}, seamless repeating pattern, high quality original design, 8k resolution`;
+  const p = `${current.motif}, ${current.structure}, color palette: ${current.palette}, ${current.details}, vibe: ${current.vibe}, ${current.medium}, seamless repeating pattern, high quality surface design, NO characters, NO people, NO faces, NO humans, object-based pattern only, 8k resolution`;
   $('prompt').value = p;
   $('saveBtn').style.display = "block";
 }
@@ -217,15 +217,15 @@ function reroll(field) {
 function save() {
   const p = $('prompt').value;
   if(!p) return;
-  let saved = JSON.parse(localStorage.getItem('arch_saved') || '[]');
+  let saved = JSON.parse(localStorage.getItem('arch_saved_v13') || '[]');
   if(saved.includes(p)) return;
   saved.unshift(p);
-  localStorage.setItem('arch_saved', JSON.stringify(saved.slice(0, 20)));
+  localStorage.setItem('arch_saved_v13', JSON.stringify(saved.slice(0, 20)));
   renderSaved();
 }
 
 function renderSaved() {
-  const saved = JSON.parse(localStorage.getItem('arch_saved') || '[]');
+  const saved = JSON.parse(localStorage.getItem('arch_saved_v13') || '[]');
   if(saved.length === 0) return;
   $('savedSection').style.display = 'block';
   $('savedList').innerHTML = saved.map(p => `<div class="saved-item">${p}</div>`).join('');
