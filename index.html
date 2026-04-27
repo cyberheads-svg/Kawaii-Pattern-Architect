@@ -14,49 +14,38 @@
   }
   *{box-sizing:border-box;margin:0;padding:0; -webkit-tap-highlight-color:transparent;}
   body{background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px 60px}
-  
   header{text-align:center;margin-bottom:32px; width:100%; max-width:720px;}
   .eyebrow{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
   h1{font-family:var(--serif);font-style:italic;font-size:clamp(28px,8vw,46px);color:#fff;font-weight:400;line-height:1.1;margin-bottom:4px}
   h1 span{color:var(--accent);transition:color .3s}
   .counter{font-size:10px;color:var(--dim);margin-top:8px;letter-spacing:.2em}
-
   .selector-group{width:100%;max-width:720px;margin-bottom:12px}
   .selector-label{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
   .selector{display:flex;gap:8px;width:100%;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;}
   .selector::-webkit-scrollbar{display:none;}
   .selector-btn{flex:0 0 auto;min-width:130px;padding:11px 15px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:all .2s}
   .selector-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(255,138,212,0.03)}
-
   .card{width:100%;max-width:720px;background:var(--panel);border:1px solid var(--border);padding:32px;margin-bottom:20px;min-height:550px;display:flex;flex-direction:column;border-radius:4px;}
   .fields{display:flex;flex-direction:column;gap:0;flex-grow:1}
   .field-row{display:grid;grid-template-columns:100px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--border);min-height:45px}
   .field-row:last-child{border-bottom:none}
   .field-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding-top:6px}
   .field-value{font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.4;color:#f1ecf7}
-  
   .reroll-btn{background:transparent;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:2px 6px;transition:all .15s;opacity:0.3}
   .reroll-btn:hover{color:var(--accent);transform:rotate(-15deg);opacity:1}
-
   .divider{border:none;border-top:1px solid var(--border);margin:20px 0}
   .prompt-textarea{width:100%;background:#080a0c;border:1px solid var(--border2);color:var(--muted);font-family:var(--mono);font-size:11px;line-height:1.8;padding:14px;resize:none;min-height:130px;margin-bottom:14px;word-break:break-word;outline:none;border-radius:4px;}
-
   .action-bar{display:flex;gap:10px;justify-content:flex-end}
   .copy-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);padding:10px 18px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;font-family:var(--mono);transition:all .2s;border-radius:2px}
   .copy-btn:hover{border-color:var(--accent);color:var(--accent)}
-
   .generate-btn{width:100%;max-width:720px;background:var(--accent);color:#000;font-weight:700;border:none;padding:22px;font-size:13px;letter-spacing:.4em;text-transform:uppercase;cursor:pointer;font-family:var(--mono);transition:all .2s;margin-bottom:40px;border-radius:4px}
-  .generate-btn:active{transform:translateY(1px);filter:brightness(0.9)}
-  
   footer{margin-top:20px;font-size:9px;color:var(--dim);letter-spacing:.2em;text-align:center}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-  .animate-in{animation:fadeIn .4s ease-out forwards}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="eyebrow">Studio Architect / v1.8 Total Massive</div>
+  <div class="eyebrow">Studio Architect / v1.8</div>
   <h1 id="mainTitle">Surface <span>Architect</span></h1>
   <div class="counter" id="count">0000 GENERATED</div>
 </header>
@@ -64,10 +53,10 @@
 <div class="selector-group">
   <div class="selector-label">Design Universe</div>
   <div class="selector" id="styleSelector">
-    <button class="selector-btn active" data-style="kawaii">Kawaii Massive</button>
-    <button class="selector-btn" data-style="geometric">Geometric Massive</button>
-    <button class="selector-btn" data-style="pop">Pop Art Massive</button>
-    <button class="selector-btn" data-style="minimal">Minimal Massive</button>
+    <button class="selector-btn active" data-style="kawaii">Kawaii Deep</button>
+    <button class="selector-btn" data-style="pop">Pop Art</button>
+    <button class="selector-btn" data-style="geometric">Geometric</button>
+    <button class="selector-btn" data-style="minimal">Minimal</button>
   </div>
 </div>
 
@@ -80,27 +69,35 @@
     <div class="field-row"><div class="field-label">Details</div><div class="field-value" id="v-details">---</div><button class="reroll-btn" onclick="reroll('details')">🔄</button></div>
     <div class="field-row"><div class="field-label">Material</div><div class="field-value" id="v-medium">---</div><button class="reroll-btn" onclick="reroll('medium')">🔄</button></div>
   </div>
-  
   <hr class="divider">
-  <textarea class="prompt-textarea" id="prompt" readonly placeholder="Awaiting system instructions..."></textarea>
-  <div class="action-bar">
-    <button class="copy-btn" id="copyBtn">Copy Architecture</button>
-  </div>
+  <textarea class="prompt-textarea" id="prompt" readonly placeholder="Merging AI Intelligence..."></textarea>
+  <div class="action-bar"><button class="copy-btn" id="copyBtn">Copy Architecture</button></div>
 </div>
 
-<button class="generate-btn" id="generateBtn">GENERATE TOTAL MASSIVE</button>
+<button class="generate-btn" id="generateBtn">GENERATE</button>
 
-<footer>&copy; 2026 Studio Architect // Complete Surface Design System</footer>
+<footer>&copy; 2026 Allied Studio // Unified Pattern Design System</footer>
 
 <script>
 const DATA = {
   kawaii: {
-    motif: ["floating ribbon bows and lace","glittering star silhouettes","dreamy pastel clouds","strawberry milk splashes","translucent slime droplets","metallic safety pin rows","industrial studs and rivets","iridescent sea shells","butterfly wing patterns","crinkled vinyl PVC texture","holographic foil reflections","progress bar segments","abstract UI window frames","sparkling soda bubbles","heavy chain link textures","layered tulle lace","faux fur surface","melting ice cream swirls","heart-shaped patch stitches","cherry and sparkle symbols"],
-    structure: ["dense seamless tile", "scattered floating arrangement", "diagonal candy stripes", "bubble wrap grid", "radial heart symmetry", "uniform isometric grid", "tessellated polygon tiling", "layered overlapping elements", "scalloped border repeat", "honeycomb icon layout", "spiral motif arrangement", "interlocking ribbon waves", "staggered offset pattern", "rhythmic heart pulse", "chaotic decora explosion", "concentric circle ripples", "checkerboard icon grid", "linear element flow", "woven ribbon texture", "dense sticker-bombing"],
-    palette: ["yumekawaii lavender & mint", "strawberry milk pink & cream", "cyber kawaii neon pink", "pastel goth black & pink", "angel core white & gold", "y2k metallic pink & blue", "healing sage & blush", "acid green & purple pop", "marshmallow peach & blue", "menhera dark red & black", "creamy vanilla & caramel", "90s anime bright palette", "dreamy sunset gradient", "icy winter pastel blue", "vintage toy bright colors", "soft lilac & lemonade", "pudding yellow & brown", "magical girl transformation glow", "soft velvet teal & rose", "neon gummy candy colors"],
-    vibe: ["soft and dreamy", "chaotic but cute", "extremely healing", "nostalgic 90s-2000s", "sentimental and nostalgic", "street fashion kawaii", "elegant princess-like", "slightly surreal and airy", "energetic and playful", "darkly sweet and emotional", "pure and innocent", "hyper-active decora", "modernist minimal cute", "fairy-tale magical", "sweet and airy", "bittersweet memory", "playful and mischievous", "luxurious and fancy", "underground harajuku style", "ethereal and heavenly"],
-    details: ["sparkling glitter dust", "pastel blush airbrushing", "pearl sheen highlights", "delicate lace embroidery", "puffy 3D sticker finish", "halftone heart screen tones", "iridescent holographic film", "manga-style empty frames", "glossy jelly finish", "soft-focus bokeh hearts", "pastel chromatic aberration", "heart-shaped light leaks", "glitter gel pen strokes", "watercolor bleed edges", "3D clay-like volume", "soft airbrushed grain", "reflective plastic sheen", "embroidered patch edges", "fine ink pen sparkles", "layered transparency effect"],
+    motif: [
+      /* Grok's Request: ゆめかわ & 量産型 150+ Motifs */
+      "melting ice cream with glitter flakes","layered frill cake with ribbons","frilly ribbon bows with pearls","pastel syringe with heart liquid","band-aid patches with lace edges","pixelated tamagotchi icons","90s flip phone silhouettes","frilly lace umbrellas","strawberry milk splashes","crinkled holographic PVC","star-shaped candy drops","shimmering perfume bottles","glass slippers with ribbons","moon macarons","dreamy carousel horses","checkered heart patches","lace-up corset lacing","velvet rosettes with silver charms","heavy bijoux and gems","quilted leather texture","tweed fabric patterns","monogram heart logos","satin ribbon streamers","pearl necklaces strings","broken heart glass shards","blood-dripping teddy bears","medical cross charms","barbed wire with lace","dark-eyed doll faces","bandage textures","metallic pill capsules","eyeball-shaped cherries","razor blade charms","90s flip phones","translucent iMac plastic","neon jelly heart stickers","inflatable chair shapes","rainbow butterfly clips","star sunglasses","groovy flower icons","tribal heart tattoos","clunky platform boots","graffiti star tags","progress bar UI","abstract window frames","heavy chain links","tulle lace layers","faux fur texture","heart-shaped stitches","butterfly wing patterns","industrial metal studs","iridescent sea shells","soda bubbles","soft swan silhouettes","crystal prism shards","origami cranes","folded love notes","tiny golden bells","frilly apron lace","tiara silhouettes","magical wands","glittering crowns","swan boats","soft-serve swirls","lollipop swirls","gummy rings","starry sky fragments","candy necklaces","beaded bracelets","ribbon chokers","fluffy slippers","lace headbands","cherry blossom petals","shining diamond dust","cat ear silhouettes","bunny tail puffs","bow-tie pasta","pastel macarons","magic circles","cyber wings","circuit hearts","neon tubes","fuzzy pom-poms","silk rosettes","liquid mercury drops","chrome hearts","glass marbles","holographic butterflies","candy wrappers","marshmallows","checkered ribbons","starry constellations","lace fans","sparkle emojis","floating balloons","jelly beans","wrapped candies","layered ruffles","scalloped lace","beaded curtains","pearl strands","sequin textures","glitter stars","shimmering scales","velvet bows","satin ribbons","fluffy kittens","small bunnies","cupcake swirls","fruit slices","lemon drops","mint leaves","lavender buds","pink roses","daisy chains","sunflower petals","firefly glow","dreamcatchers","stuffed animals","milk bottles","teddy bear heads","strawberry slices","whipped cream peaks","glittering raindrops","pastel feathers","chibi angel wings","corset bows","sheer mesh panels","glitter jelly shoes","pom-pom earrings","starry hair clips","lace doilies","heart lollipops","puffy stickers","pixel stars","glossy hearts","holographic circles"
+    ],
+    structure: ["dense seamless tile", "scattered floating", "diagonal candy stripes", "bubble wrap grid", "radial heart symmetry", "uniform isometric grid", "layered overlapping elements", "scalloped border repeat", "honeycomb icon layout", "spiral motif arrangement", "staggered offset pattern", "rhythmic heart pulse", "chaotic decora explosion", "concentric circle ripples", "checkerboard icon grid", "linear element flow", "woven ribbon texture", "dense sticker-bombing"],
+    palette: ["yumekawaii lavender", "strawberry milk pink", "cyber kawaii neon pink", "pastel goth black/pink", "angel core white/gold", "y2k metallic pink/blue", "healing sage/blush", "acid green/purple pop", "marshmallow peach/blue", "menhera dark red/black", "creamy vanilla", "90s anime bright palette", "dreamy sunset gradient", "icy winter pastel blue", "vintage toy bright", "soft lilac", "pudding yellow", "magical girl transformation glow", "soft velvet teal/rose", "neon gummy candy colors"],
+    vibe: ["soft and dreamy", "chaotic but cute", "extremely healing", "nostalgic 90s-2000s", "sentimental", "street fashion kawaii", "elegant princess", "slightly surreal", "energetic and playful", "darkly sweet", "pure and innocent", "hyper-active decora", "modernist minimal cute", "fairy-tale magical", "sweet and airy", "bittersweet memory", "playful and mischievous", "luxurious and fancy", "underground harajuku style", "ethereal and heavenly"],
+    details: ["sparkling glitter dust", "pastel airbrushing", "pearl sheen", "delicate lace embroidery", "puffy 3D sticker finish", "halftone heart screen tones", "iridescent holographic film", "manga-style empty frames", "glossy jelly finish", "soft-focus bokeh hearts", "pastel chromatic aberration", "heart-shaped light leaks", "glitter gel pen strokes", "watercolor bleed edges", "3D clay-like volume", "soft airbrushed grain", "reflective plastic sheen", "embroidered patch edges", "fine ink pen sparkles", "layered transparency effect"],
     medium: ["vector kawaii illustration", "90s anime cel-shading", "soft pastel gouache", "3D cute matte render", "digital sticker sheet style", "risograph print texture", "glitter gel art", "watercolor wash", "claymation aesthetic", "pixel art cute style", "airbrushed street art", "screen print vintage", "3D glossy plastic render", "felt and fabric collage", "pencil sketch and pastel", "chalk-like soft texture", "iridescent digital painting", "high-gloss vinyl render", "embroidery art style", "mixed media cute collage"]
+  },
+  pop: {
+    motif: ["halftone dots", "y2k stars", "pixel patterns", "sticker fragments", "abstract squiggles", "explosion bursts", "graffiti textures", "soup cans", "abstract lips", "dollar signs", "retro phones", "pixel cherries", "thunderbolts", "checkered race", "bananas", "sunglasses", "speech bubbles", "stencil faces", "flyer fragments", "spray splatters", "arcade buttons", "cassette tapes", "boomboxes", "record discs", "neon signs", "lightning bolts", "pixel aliens", "flying saucers", "hot dogs", "french fries", "popcorn bags", "cola bottles", "ice cream cones", "rainbow arches", "lucky cats", "peace signs", "happy faces", "target circles", "arrows", "barcode strips", "price tags", "shopping bags", "diamonds", "dice", "playing cards", "cherries", "pineapples", "flamingos", "palm trees", "roller skates", "headphones", "joysticks", "gamepads", "floppy disks", "pixel swords", "crowns", "skulls", "crossbones", "safety pins", "razor blades", "eyeballs", "dripping paint", "ink blots", "paint brushes", "pencils", "paper clips", "push pins", "stamps", "postcards", "magnifying glass", "light bulbs", "clocks", "keys", "padlocks", "chains", "anchors", "nautical stars", "tigers", "panthers", "snakes", "roses", "swallows", "daggers", "hearts with banners", "pin-up silhouettes", "vintage cars", "motorcycles", "electric guitars", "microphones", "musical notes", "TV sets", "robots", "rocket ships", "planets", "stars", "moons", "clouds", "lightning", "fire"],
+    structure: ["chaotic overlapping", "diagonal bold stripes", "random burst arrangement", "scattered pop icons", "tiling sticker bomb", "staggered comic panel grid", "radial pop explosion", "checkerboard pattern", "linear icon stream", "dense collage layout", "offset repeat tiling", "interlocking pop shapes", "rhythmic repetition", "stark high-contrast split", "layered stencil stacks", "scattered Ben-Day dots", "diagonal zigzag layout", "symmetrical pop icons", "asymmetrical sticker mess", "ordered zine-style grid"],
+    palette: ["vivid neon synthwave", "bubblegum pink/yellow", "acid green/purple", "high-contrast red/blue", "retro 80s arcade", "andy warhol brights", "vintage comic CMYK", "street graffiti neon", "pop-art triadic", "electric orange/teal", "fluorescent yellow/black", "hot pink/cyan", "retro-future silver", "high-saturation primary", "disco purple/orange", "urban skate-wear colors", "vivid commercial colors", "high-contrast yellow/violet", "sunset neon gradients", "faded vintage pop colors"],
+    vibe: ["loud and energetic", "playful and ironic", "noisy and street", "underground pop style", "nostalgic 80s arcade", "rebellious and bold", "satirical and commercial", "vibrant and rhythmic", "funky and retro", "urban and aggressive", "playful consumerism", "trash-culture chic", "high-energy movement", "kitsch and fun", "street-style cool", "comic-book dynamic", "ironic and cool", "vibrant and messy", "youthful and loud", "boldly expressive"],
+    details: ["thick black ink outlines", "ben-day comic dots", "glossy plastic highlights", "chromatic aberration", "distressed paper texture", "onomatopoeia graphics", "halftone gradient fades", "screen print misalignments", "spray paint drips", "stencil spray texture", "marker pen outlines", "newsprint grain", "sticker peel effects", "ink bleed edges", "high-gloss varnish", "digital glitch artifacts", "bold drop shadows", "fluorescent glow", "retro scanline effect", "torn paper edges"],
+    medium: ["pop art illustration", "vintage comic print", "risograph texture", "vector sticker art", "screen print style", "stencil street art", "zine-style collage", "marker drawing style", "retro-future digital art", "silk-screen aesthetic", "pixel art pop", "acrylic pop painting", "digital airbrush style", "mixed media pop", "comic-book ink art", "poster design style", "street art graffiti", "bold vector graphic", "vintage commercial art", "modern pop aesthetic"]
   },
   geometric: {
     motif: ["bauhaus primitives", "hexagonal honeycomb", "concentric ripples", "isometric cubes", "interlocking chevrons", "sacred geometry mandalas", "archimedean solids", "penrose tiling fragments", "voronoi diagram cells", "golden ratio spirals", "mathematical line waves", "fractal tree branches", "modular square blocks", "dodecahedron wireframes", "tangram puzzle shapes", "blueprint technical lines", "geometric crystal shards", "minimalist bar codes", "optical moiré patterns", "layered pyramid steps"],
@@ -110,17 +107,9 @@ const DATA = {
     details: ["sharp vector edges", "mathematical line precision", "subtle drop shadows", "glowing neon wireframes", "layered transparency", "technical blueprint grain", "vector anchor points", "micro-grid overlays", "halftone gradient dots", "precise thin hairlines", "subtle depth mapping", "glowing edge highlights", "blueprint annotation marks", "digital data stream noise", "perfect circle arcs", "anti-aliased edges", "mathematical coordinate dots", "brushed metal texture", "anodized finish", "etched line details"],
     medium: ["clean vector design", "3D architectural render", "screen print style", "generative digital art", "precise plotter drawing", "technical illustration", "3D wireframe render", "isometric digital art", "blueprint scan aesthetic", "minimalist poster art", "CGI precision render", "algorithmic generative art", "brutalist graphic design", "swiss international style", "abstract geometric painting", "laser-cut wood aesthetic", "etched metal design", "3D matte glass render", "vector path art", "hard-edge painting style"]
   },
-  pop: {
-    motif: ["bold halftone dots", "y2k bling star shapes", "retro arcade pixel patterns", "vibrant sticker-style fragments", "bubblegum abstract squiggles", "comic book explosion bursts", "street graffiti texture fragments", "soup can silhouettes", "abstract halftone lips", "dollar sign fragments", "retro telephone icons", "pixelated cherry icons", "bold thunderbolt shapes", "checkered race patterns", "pop art banana shapes", "retro sunglasses outlines", "comic-style speech bubbles", "stencil-style faces (no identity)", "urban flyer fragments", "spray paint splatters"],
-    structure: ["chaotic overlapping layers", "diagonal bold stripes", "random burst arrangement", "scattered pop icons", "tiling sticker bomb", "staggered comic panel grid", "radial pop explosion", "checkerboard pattern", "linear icon stream", "dense collage layout", "offset repeat tiling", "interlocking pop shapes", "rhythmic repetition", "stark high-contrast split", "layered stencil stacks", "scattered Ben-Day dots", "diagonal zigzag layout", "symmetrical pop icons", "asymmetrical sticker mess", "ordered zine-style grid"],
-    palette: ["vivid neon synthwave", "bubblegum pink and yellow", "acid green and purple", "high-contrast red and blue", "retro 80s arcade colors", "andy warhol brights", "vintage comic CMYK", "street graffiti neon", "pop-art triadic colors", "electric orange & teal", "fluorescent yellow & black", "hot pink & cyan", "retro-future silver & gold", "high-saturation primary", "disco purple & orange", "urban skate-wear colors", "vivid commercial colors", "high-contrast yellow & violet", "sunset neon gradients", "faded vintage pop colors"],
-    vibe: ["loud and energetic", "playful and ironic", "noisy and street", "underground pop style", "nostalgic 80s arcade", "rebellious and bold", "satirical and commercial", "vibrant and rhythmic", "funky and retro", "urban and aggressive", "playful consumerism", "trash-culture chic", "high-energy movement", "kitsch and fun", "street-style cool", "comic-book dynamic", "ironic and cool", "vibrant and messy", "youthful and loud", "boldly expressive"],
-    details: ["thick black ink outlines", "ben-day comic dots", "glossy plastic highlights", "chromatic aberration", "distressed paper texture", "onomatopoeia text graphics", "halftone gradient fades", "screen print misalignments", "spray paint drips", "stencil spray texture", "marker pen outlines", "newsprint texture grain", "sticker peel effects", "ink bleed edges", "high-gloss varnish", "digital glitch artifacts", "bold drop shadows", "fluorescent glow", "retro scanline effect", "torn paper edges"],
-    medium: ["pop art illustration", "vintage comic print", "risograph texture", "vector sticker art", "screen print style", "stencil street art", "zine-style collage", "marker drawing style", "retro-future digital art", "silk-screen aesthetic", "pixel art pop", "acrylic pop painting", "digital airbrush style", "mixed media pop", "comic-book ink art", "poster design style", "street art graffiti", "bold vector graphic", "vintage commercial art", "modern pop aesthetic"]
-  },
   minimal: {
     motif: ["subtle terrazzo specks", "thin topographic lines", "sashiko stitch marks", "soft gradient grain", "microscopic dot grid", "gentle organic ripples", "solitary monolith shapes", "single thread lines", "abstract zen circles", "soft-focus light beams", "minimalist stone shapes", "fine ink splatters", "folded paper creases", "micro-needle textures", "sparse sand ripples", "geometric moon phases", "delicate leaf veins", "abstract ash particles", "clean shadow lines", "pure empty space"],
-    structure: ["sparse open layout", "uniform micro-grid", "seamless subtle tiling", "asymmetric negative space", "perfectly balanced emptiness", "golden ratio alignment", "central focal point", "single horizon line", "rhythmic breathing space", "staggered sparse elements", "minimalist linear flow", "centered zen symmetry", "layered sheer transparency", "floating microscopic grid", "perfectly ordered silence", "random but sparse drift", "strictly aligned margins", "subtle organic clustering", "diagonal fine lines", "asymmetrical white space"],
+    structure: ["sparse open layout", "uniform micro-grid", "seamless subtle tiling", "asymmetric space", "perfectly balanced emptiness", "golden ratio alignment", "central focal point", "single horizon line", "rhythmic breathing space", "staggered sparse elements", "minimalist linear flow", "centered zen symmetry", "layered sheer transparency", "floating microscopic grid", "perfectly ordered silence", "random but sparse drift", "strictly aligned margins", "subtle organic clustering", "diagonal fine lines", "asymmetrical white space"],
     palette: ["muted wabi-sabi tones", "warm beige and linen", "cool slate and ash", "monochrome ink wash", "pale oat and charcoal", "bone white & limestone", "soft sand & driftwood", "cloud gray & silver", "deep charcoal & ink", "muted olive & clay", "pure snow white & mist", "concrete gray & rust", "dried leaf & sepia", "pale lavender & ash", "minimalist black & bone", "soft lichen & stone", "shadow gray & light", "matte black & gold line", "neutral gallery white", "soft parchment & ink"],
     vibe: ["silent and pure", "sophisticated and calm", "airy and structured", "precise and tranquil", "modernist emptiness", "contemplative and slow", "wabi-sabi imperfect", "sterile and clean", "architectural silence", "delicate and fragile", "stoic and strong", "uncluttered and free", "poetic and soft", "profoundly simple", "neutral and calm", "meditative and deep", "serene and quiet", "orderly and peaceful", "breathable and light", "minimalist focus"],
     details: ["ultra-fine thin lines", "matte paper texture", "soft-focus blurred edges", "perfect negative space", "subtle depth and shadow", "microscopic grain texture", "fine graphite dust", "soft watercolor wash", "perfectly sharp edges", "ink bleed (minimal)", "subtle fabric weave", "soft gradient transition", "delicate pencil marks", "clean paper emboss", "natural texture noise", "subtle light shadow", "micro-stitched details", "hand-drawn fine ink", "translucent layers", "minimalist line weight"],
@@ -129,22 +118,22 @@ const DATA = {
 };
 
 const CONFIG = {
-  kawaii: { accent: '#ff8ad4', label: 'Kawaii Massive' },
-  geometric: { accent: '#38bdf8', label: 'Geometric Massive' },
-  pop: { accent: '#fbbf24', label: 'Pop Massive' },
-  minimal: { accent: '#94a3b8', label: 'Minimal Massive' }
+  kawaii: { accent: '#ff8ad4' },
+  pop: { accent: '#fbbf24' },
+  geometric: { accent: '#38bdf8' },
+  minimal: { accent: '#94a3b8' }
 };
 
 let selectedStyle = 'kawaii';
 let current = {};
-let count = parseInt(localStorage.getItem('arch_count_v18') || '0', 10);
+let count = parseInt(localStorage.getItem('arch_count_allied_v18') || '0', 10);
 
 const $ = id => document.getElementById(id);
 const rand = arr => arr[Math.floor(Math.random()*arr.length)];
 
 function updateCount() {
   $('count').textContent = count.toString().padStart(4, '0') + " GENERATED";
-  localStorage.setItem('arch_count_v18', count);
+  localStorage.setItem('arch_count_allied_v18', count);
 }
 
 function setStyle(key) {
@@ -154,24 +143,18 @@ function setStyle(key) {
   document.querySelectorAll('.selector-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.style === key);
   });
-  $('mainTitle').querySelector('span').textContent = config.label;
 }
 
 function renderFields() {
   if(!current.motif) return;
   const accent = CONFIG[selectedStyle].accent;
   const fields = ['motif', 'structure', 'palette', 'vibe', 'details', 'medium'];
-  
   fields.forEach(f => {
     const el = $(`v-${f}`);
     el.textContent = current[f];
     el.style.color = (f === 'motif' || f === 'palette') ? accent : "var(--text)";
-    el.closest('.field-row').classList.remove('animate-in');
-    void el.offsetWidth;
-    el.closest('.field-row').classList.add('animate-in');
   });
-
-  const p = `${current.motif}, ${current.structure}, color palette: ${current.palette}, ${current.details}, vibe: ${current.vibe}, ${current.medium}, seamless repeating pattern, high quality surface design, NO characters, NO humans, NO faces, NO toys, NO real products, 8k resolution`;
+  const p = `Abstract repeating pattern of ${current.motif}, ${current.structure}, color palette: ${current.palette}, ${current.details}, vibe: ${current.vibe}, ${current.medium}, high quality surface design, seamless tiling, 8k resolution, professional graphic asset. NO humans, NO faces, NO real products.`;
   $('prompt').value = p;
 }
 
