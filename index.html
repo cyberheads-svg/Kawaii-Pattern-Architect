@@ -9,33 +9,53 @@
     --bg:#0a050f;--panel:#140d1f;--border:#2a1f3a;--accent:#ff8ad4;
     --text:#f0d8ff;--muted:#9b7ac8;
   }
-  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;margin:0;padding:40px 20px;min-height:100vh}
-  h1{font-family:'DM Serif Display',serif;font-style:italic;font-size:42px;margin:0}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;margin:0;padding:40px 20px;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+  header{text-align:center;width:100%;max-width:720px}
+  h1{font-family:'DM Serif Display',serif;font-style:italic;font-size:42px;margin:0;letter-spacing:-1px}
   h1 span{color:var(--accent)}
-  .card{background:var(--panel);border:1px solid var(--border);padding:30px;max-width:720px;margin:20px auto;border-radius:16px}
-  button{margin:8px 4px;padding:10px 16px;background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer}
-  button:hover{border-color:var(--accent);color:var(--accent)}
-  .generate-btn{background:var(--accent);color:#000;font-weight:bold;padding:16px 32px;font-size:15px}
-  textarea{width:100%;height:160px;background:#000;color:#ddd;padding:12px;font-family:monospace;margin-top:10px}
+  p{font-size:12px;color:var(--muted);letter-spacing:2px;margin-top:8px}
+  
+  .card{background:var(--panel);border:1px solid var(--border);padding:30px;width:100%;max-width:720px;margin:20px auto;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+  .counter{font-size:10px;color:var(--muted);text-align:right;margin-bottom:10px;letter-spacing:1px}
+  
+  button{margin:8px 4px;padding:12px 20px;background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:'DM Mono',monospace;transition:all 0.2s;text-transform:uppercase;font-size:11px}
+  button:hover{border-color:var(--accent);color:var(--accent);background:rgba(255,138,212,0.05)}
+  
+  .generate-btn{background:var(--accent) !important;color:#000 !important;font-weight:bold;padding:20px;font-size:14px;width:100%;letter-spacing:3px;border:none !important;border-radius:8px;margin-bottom:20px}
+  .generate-btn:active{transform:scale(0.98)}
+  
+  #result{margin:20px 0;padding:15px;border-left:2px solid var(--accent);background:rgba(255,255,255,0.02);font-size:14px;line-height:1.6}
+  #result strong{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+  
+  textarea{width:100%;height:150px;background:#000;color:#aaa;padding:15px;font-family:'DM Mono',monospace;font-size:12px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;line-height:1.6}
+  textarea:focus{border-color:var(--accent)}
+  
+  .footer{margin-top:auto;padding:20px;font-size:9px;color:var(--border);letter-spacing:1px}
 </style>
 </head>
 <body>
 
-<h1>Kawaii Pattern <span>Architect</span></h1>
-<p>漫画的吹き出し対応・オリジナルkawaii全振り</p>
+<header>
+  <h1>Kawaii Pattern <span>Architect</span></h1>
+  <p>MANGA BUBBLE & ORIGINAL KAWAII GENERATOR</p>
+</header>
 
 <div class="card">
-  <button onclick="generate()" style="width:100%;padding:18px;font-size:16px">✦ GENERATE KAWAII PATTERN ✦</button>
+  <div class="counter" id="count">0 patterns generated</div>
+  <button class="generate-btn" onclick="generate()">✦ GENERATE KAWAII PATTERN ✦</button>
   
-  <div id="result" style="margin:20px 0;min-height:60px"></div>
+  <div id="result"><strong>Status:</strong><br>Ready to create...</div>
   
-  <textarea id="prompt" readonly placeholder="ここにプロンプトが出ます"></textarea>
+  <textarea id="prompt" readonly placeholder="AI prompt will appear here..."></textarea>
   
-  <button onclick="copyPrompt()" style="margin-top:10px">Copy Prompt</button>
+  <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+    <button onclick="copyPrompt()">Copy Prompt</button>
+  </div>
 </div>
 
+<div class="footer">v1.2 // CREATIVE ARCHITECT SERIES</div>
+
 <script>
-// ==================== KAWAII DATA（漫画吹き出し強化） ====================
 const KAWAII_DATA = {
   motif: [
     "chibi pastel animals with big eyes","strawberry milk maidens","floating hearts and stars","creamy desserts and sweets",
@@ -66,7 +86,6 @@ const KAWAII_DATA = {
     "pearl and jewel accents","soft airbrushed shadows","halftone screen tone","iridescent holographic effects",
     "puffy 3D sticker look","delicate embroidery texture","glossy jelly-like finish","pastel chromatic aberration",
     "kawaii sweat drops and sparkles","heart-shaped highlights",
-    // 漫画的吹き出し要素（新追加）
     "manga speech bubbles with cute text","explosion speech bubble with 'kyaa!'","heart-shaped dialogue box",
     "sparkling thought bubble","anger vein speech bubble","sweat drop bubble","starburst surprise bubble",
     "chibi reaction faces in bubbles","multiple overlapping speech bubbles","ribbon-tied speech bubble",
@@ -79,14 +98,12 @@ const KAWAII_DATA = {
   ]
 };
 
-let current = {};
 let count = 0;
-
 const $ = id => document.getElementById(id);
 const rand = arr => arr[Math.floor(Math.random() * arr.length)];
 
 function generate() {
-  current = {
+  const current = {
     motif: rand(KAWAII_DATA.motif),
     structure: rand(KAWAII_DATA.structure),
     palette: rand(KAWAII_DATA.palette),
@@ -94,18 +111,38 @@ function generate() {
     details: rand(KAWAII_DATA.details),
     medium: rand(KAWAII_DATA.medium)
   };
+  
   count++;
-  $('count').textContent = `${count} kawaii patterns generated`;
+  $('count').textContent = `${count} patterns generated`;
 
   const prompt = `${current.motif}, ${current.structure}, color palette: ${current.palette}, ${current.details}, vibe: ${current.vibe}, ${current.medium}, seamless repeating pattern, high quality original kawaii design, cute japanese aesthetic, 8k resolution`;
   
   $('prompt').value = prompt;
-  $('result').innerHTML = `<strong>Generated:</strong><br>${current.motif}`;
+  $('result').innerHTML = `<strong>Current Composition:</strong><br>${current.motif} in ${current.palette}`;
+  
+  // ちょっとした演出
+  $('result').style.opacity = 0;
+  setTimeout(() => { $('result').style.opacity = 1; }, 50);
 }
 
 function copyPrompt() {
-  const text = $('prompt').value;
-  if (text) navigator.clipboard.writeText(text);
+  const textArea = $('prompt');
+  if (!textArea.value) return;
+  
+  textArea.select();
+  document.execCommand('copy');
+  
+  const btn = event.target;
+  const originalText = btn.textContent;
+  btn.textContent = 'COPIED!';
+  btn.style.color = '#fff';
+  btn.style.borderColor = '#fff';
+  
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.style.color = '';
+    btn.style.borderColor = '';
+  }, 1000);
 }
 </script>
 </body>
