@@ -2,146 +2,268 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Kawaii Pattern Architect</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap');
-  :root{
-    --bg:#0a050f;--panel:#140d1f;--border:#2a1f3a;--accent:#ff8ad4;
-    --text:#f0d8ff;--muted:#9b7ac8;
+  
+  :root {
+    --bg: #0a050f;
+    --panel: #140d1f;
+    --border: #2a1f3a;
+    --accent: #ff8ad4;
+    --text: #f0d8ff;
+    --muted: #9b7ac8;
+    --dim: #221a2e;
+    --mono: 'DM Mono', monospace;
+    --serif: 'DM Serif Display', serif;
   }
-  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;margin:0;padding:40px 20px;min-height:100vh;display:flex;flex-direction:column;align-items:center}
-  header{text-align:center;width:100%;max-width:720px}
-  h1{font-family:'DM Serif Display',serif;font-style:italic;font-size:42px;margin:0;letter-spacing:-1px}
-  h1 span{color:var(--accent)}
-  p{font-size:12px;color:var(--muted);letter-spacing:2px;margin-top:8px}
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   
-  .card{background:var(--panel);border:1px solid var(--border);padding:30px;width:100%;max-width:720px;margin:20px auto;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
-  .counter{font-size:10px;color:var(--muted);text-align:right;margin-bottom:10px;letter-spacing:1px}
-  
-  button{margin:8px 4px;padding:12px 20px;background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:'DM Mono',monospace;transition:all 0.2s;text-transform:uppercase;font-size:11px}
-  button:hover{border-color:var(--accent);color:var(--accent);background:rgba(255,138,212,0.05)}
-  
-  .generate-btn{background:var(--accent) !important;color:#000 !important;font-weight:bold;padding:20px;font-size:14px;width:100%;letter-spacing:3px;border:none !important;border-radius:8px;margin-bottom:20px}
-  .generate-btn:active{transform:scale(0.98)}
-  
-  #result{margin:20px 0;padding:15px;border-left:2px solid var(--accent);background:rgba(255,255,255,0.02);font-size:14px;line-height:1.6}
-  #result strong{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:1px}
-  
-  textarea{width:100%;height:150px;background:#000;color:#aaa;padding:15px;font-family:'DM Mono',monospace;font-size:12px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;line-height:1.6}
-  textarea:focus{border-color:var(--accent)}
-  
-  .footer{margin-top:auto;padding:20px;font-size:9px;color:var(--border);letter-spacing:1px}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.5;
+  }
+
+  header {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(32px, 8vw, 46px);
+    margin: 0;
+    line-height: 1;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .description {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    margin-top: 12px;
+    text-transform: uppercase;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 24px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .counter {
+    font-size: 9px;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+
+  .generate-btn {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    padding: 18px;
+    font-size: 12px;
+    width: 100%;
+    letter-spacing: 0.3em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--mono);
+    margin-bottom: 24px;
+    transition: transform 0.1s, filter 0.2s;
+  }
+
+  .generate-btn:active { transform: scale(0.98); }
+  .generate-btn:hover { filter: brightness(1.1); }
+
+  #result-box {
+    margin-bottom: 24px;
+    min-height: 80px;
+  }
+
+  .label {
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+
+  .value {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  .prompt-container {
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    height: 120px;
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    padding: 0;
+  }
+
+  .action-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+
+  .copy-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 16px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--mono);
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .copy-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+  footer {
+    margin-top: 40px;
+    font-size: 9px;
+    color: var(--dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* Mobile Optimization */
+  @media (max-width: 480px) {
+    body { padding: 15px; }
+    .card { padding: 20px; }
+    h1 { font-size: 36px; }
+    .value { font-size: 16px; }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Kawaii Pattern <span>Architect</span></h1>
-  <p>MANGA BUBBLE & ORIGINAL KAWAII GENERATOR</p>
+  <div class="eyebrow">Creative Series // v1.2</div>
+  <h1>Kawaii <span>Architect</span></h1>
+  <div class="description">Manga Bubble & Original Aesthetic</div>
 </header>
 
 <div class="card">
-  <div class="counter" id="count">0 patterns generated</div>
-  <button class="generate-btn" onclick="generate()">✦ GENERATE KAWAII PATTERN ✦</button>
+  <div class="counter" id="count">0000 GENERATED</div>
   
-  <div id="result"><strong>Status:</strong><br>Ready to create...</div>
+  <button class="generate-btn" onclick="generate()">GENERATE ARCHITECTURE</button>
   
-  <textarea id="prompt" readonly placeholder="AI prompt will appear here..."></textarea>
+  <div id="result-box">
+    <div class="label">Current Motif</div>
+    <div class="value" id="res-motif">---</div>
+  </div>
+
+  <div class="label">Output Prompt</div>
+  <div class="prompt-container">
+    <textarea id="prompt" readonly placeholder="READY TO BUILD..."></textarea>
+  </div>
   
-  <div style="display:flex; justify-content:flex-end; margin-top:10px;">
-    <button onclick="copyPrompt()">Copy Prompt</button>
+  <div class="action-bar">
+    <button class="copy-btn" id="copy-btn" onclick="copyPrompt()">Copy Prompt</button>
   </div>
 </div>
 
-<div class="footer">v1.2 // CREATIVE ARCHITECT SERIES</div>
+<footer>&copy; 2026 Studio Architect</footer>
 
 <script>
-const KAWAII_DATA = {
-  motif: [
-    "chibi pastel animals with big eyes","strawberry milk maidens","floating hearts and stars","creamy desserts and sweets",
-    "magical girl transformation crystals","fluffy bunny ear hoodies","big sparkling eyes and blush","pastel unicorn silhouette",
-    "heart-shaped balloons and confetti","floating macarons and sweets","lace and ribbon explosion","soft girl frills and bows",
-    "cute medicine bottles and pills","broken doll stitches and tears","black tears with pastel pink","yandere knife and heart motifs",
-    "90s anime sparkles and flowers","chunky metallic accessories","y2k star and heart chain","shoujo manga screen tone explosion",
-    "cat ear silhouettes and paw prints","creamy latte art patterns","sakura petals falling","plush toy mountain",
-    "dreamy moon and star garland","healing crystal and potion bottles","kawaii ghost friends","pastel horror cute motifs"
-  ],
-  structure: [
-    "dense seamless repeating pattern","floating scattered arrangement","diagonal candy stripe layout","bubble wrap grid",
-    "heart-shaped tessellation","random cute motif explosion","uniform isometric kawaii grid","layered overlapping elements",
-    "scalloped border frame","radial burst from center","checkerboard with cute icons","polka dots with characters"
-  ],
-  palette: [
-    "yumekawaii pastel explosion","strawberry milk pink & cream","cyber kawaii neon","soft girl mint & lavender",
-    "pastel goth black & pink","healing sage & blush","creamy dessert palette","90s anime bright",
-    "shoujo manga rose & mint","menhera dark kawaii","angel core white & gold","y2k metallic pink & blue"
-  ],
-  vibe: [
-    "extremely healing and soft","hyper feminine and dreamy","chaotic cute energy","nostalgic 90s-2000s",
-    "slightly menhera and emotional","bright and energetic","elegant princess-like","street fashion kawaii",
-    "fairytale soft","slightly surreal and dreamy","maximum decora overload","gentle and comforting"
-  ],
-  details: [
-    "sparkling glitter and stars","big sparkling eyes","blush stickers and hearts","lace and ribbon details",
-    "pearl and jewel accents","soft airbrushed shadows","halftone screen tone","iridescent holographic effects",
-    "puffy 3D sticker look","delicate embroidery texture","glossy jelly-like finish","pastel chromatic aberration",
-    "kawaii sweat drops and sparkles","heart-shaped highlights",
-    "manga speech bubbles with cute text","explosion speech bubble with 'kyaa!'","heart-shaped dialogue box",
-    "sparkling thought bubble","anger vein speech bubble","sweat drop bubble","starburst surprise bubble",
-    "chibi reaction faces in bubbles","multiple overlapping speech bubbles","ribbon-tied speech bubble",
-    "comic book onomatopoeia (dokidoki, kyun, etc.)"
-  ],
-  medium: [
-    "clean vector kawaii illustration","90s anime cel-shading","soft pastel gouache","risograph print",
-    "3D cute render","digital sticker sheet","shoujo manga screen tone","y2k flash art style",
-    "healing aesthetic collage","kawaii acrylic painting","glitter gel pen illustration","cute 3D clay model render"
-  ]
+const DATA = {
+  motif: ["chibi pastel animals with big eyes","strawberry milk maidens","floating hearts and stars","creamy desserts and sweets","magical girl transformation crystals","fluffy bunny ear hoodies","big sparkling eyes and blush","pastel unicorn silhouette","heart-shaped balloons and confetti","floating macarons and sweets","lace and ribbon explosion","soft girl frills and bows","cute medicine bottles and pills","broken doll stitches and tears","black tears with pastel pink","yandere knife and heart motifs","90s anime sparkles and flowers","chunky metallic accessories","y2k star and heart chain","shoujo manga screen tone explosion","cat ear silhouettes and paw prints","creamy latte art patterns","sakura petals falling","plush toy mountain","dreamy moon and star garland","healing crystal and potion bottles","kawaii ghost friends","pastel horror cute motifs"],
+  structure: ["dense seamless repeating pattern","floating scattered arrangement","diagonal candy stripe layout","bubble wrap grid","heart-shaped tessellation","random cute motif explosion","uniform isometric kawaii grid","layered overlapping elements","scalloped border frame","radial burst from center","checkerboard with cute icons","polka dots with characters"],
+  palette: ["yumekawaii pastel explosion","strawberry milk pink & cream","cyber kawaii neon","soft girl mint & lavender","pastel goth black & pink","healing sage & blush","creamy dessert palette","90s anime bright","shoujo manga rose & mint","menhera dark kawaii","angel core white & gold","y2k metallic pink & blue"],
+  vibe: ["extremely healing and soft","hyper feminine and dreamy","chaotic cute energy","nostalgic 90s-2000s","slightly menhera and emotional","bright and energetic","elegant princess-like","street fashion kawaii","fairytale soft","slightly surreal and dreamy","maximum decora overload","gentle and comforting"],
+  details: ["sparkling glitter and stars","big sparkling eyes","blush stickers and hearts","lace and ribbon details","pearl and jewel accents","soft airbrushed shadows","halftone screen tone","iridescent holographic effects","puffy 3D sticker look","delicate embroidery texture","glossy jelly-like finish","pastel chromatic aberration","kawaii sweat drops and sparkles","heart-shaped highlights","manga speech bubbles with cute text","explosion speech bubble with 'kyaa!'","heart-shaped dialogue box","sparkling thought bubble","anger vein speech bubble","sweat drop bubble","starburst surprise bubble","chibi reaction faces in bubbles","multiple overlapping speech bubbles","ribbon-tied speech bubble","comic book onomatopoeia"],
+  medium: ["clean vector kawaii illustration","90s anime cel-shading","soft pastel gouache","risograph print","3D cute render","digital sticker sheet","shoujo manga screen tone","y2k flash art style","healing aesthetic collage","kawaii acrylic painting","glitter gel pen illustration","cute 3D clay model render"]
 };
 
 let count = 0;
-const $ = id => document.getElementById(id);
-const rand = arr => arr[Math.floor(Math.random() * arr.length)];
+const rand = a => a[Math.floor(Math.random()*a.length)];
 
 function generate() {
-  const current = {
-    motif: rand(KAWAII_DATA.motif),
-    structure: rand(KAWAII_DATA.structure),
-    palette: rand(KAWAII_DATA.palette),
-    vibe: rand(KAWAII_DATA.vibe),
-    details: rand(KAWAII_DATA.details),
-    medium: rand(KAWAII_DATA.medium)
+  const c = {
+    m: rand(DATA.motif), s: rand(DATA.structure), p: rand(DATA.palette),
+    v: rand(DATA.vibe), d: rand(DATA.details), med: rand(DATA.medium)
   };
   
   count++;
-  $('count').textContent = `${count} patterns generated`;
-
-  const prompt = `${current.motif}, ${current.structure}, color palette: ${current.palette}, ${current.details}, vibe: ${current.vibe}, ${current.medium}, seamless repeating pattern, high quality original kawaii design, cute japanese aesthetic, 8k resolution`;
+  document.getElementById('count').textContent = count.toString().padStart(4, '0') + " GENERATED";
+  document.getElementById('res-motif').textContent = c.m;
   
-  $('prompt').value = prompt;
-  $('result').innerHTML = `<strong>Current Composition:</strong><br>${current.motif} in ${current.palette}`;
+  const p = `${c.m}, ${c.s}, color palette: ${c.p}, ${c.d}, vibe: ${c.v}, ${c.med}, seamless repeating pattern, high quality original kawaii design, cute japanese aesthetic, 8k resolution`;
+  document.getElementById('prompt').value = p;
   
-  // ちょっとした演出
-  $('result').style.opacity = 0;
-  setTimeout(() => { $('result').style.opacity = 1; }, 50);
+  const val = document.getElementById('res-motif');
+  val.style.opacity = 0;
+  setTimeout(() => val.style.opacity = 1, 50);
 }
 
-function copyPrompt() {
-  const textArea = $('prompt');
-  if (!textArea.value) return;
+async function copyPrompt() {
+  const text = document.getElementById('prompt').value;
+  if(!text) return;
+  await navigator.clipboard.writeText(text);
   
-  textArea.select();
-  document.execCommand('copy');
-  
-  const btn = event.target;
-  const originalText = btn.textContent;
-  btn.textContent = 'COPIED!';
-  btn.style.color = '#fff';
-  btn.style.borderColor = '#fff';
-  
+  const btn = document.getElementById('copy-btn');
+  btn.textContent = "COPIED";
+  btn.classList.add('active');
   setTimeout(() => {
-    btn.textContent = originalText;
-    btn.style.color = '';
-    btn.style.borderColor = '';
+    btn.textContent = "Copy Prompt";
+    btn.classList.remove('active');
   }, 1000);
 }
 </script>
