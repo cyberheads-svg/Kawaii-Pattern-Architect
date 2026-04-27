@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Pattern Architect — Pure Surface v1.5</title>
+<title>Pattern Architect — Surface Studio v1.6</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap');
   :root{
@@ -21,8 +21,17 @@
   h1 span{color:var(--accent);transition:color .3s}
   .counter{font-size:10px;color:var(--dim);margin-top:8px;letter-spacing:.2em}
 
+  .selector-group{width:100%;max-width:720px;margin-bottom:12px}
+  .selector-label{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .selector{display:flex;gap:8px;width:100%;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;}
+  .selector::-webkit-scrollbar{display:none;}
+  .selector-btn{flex:0 0 auto;min-width:110px;padding:11px 15px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+  .selector-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(255,138,212,0.03)}
+
   .card{width:100%;max-width:720px;background:var(--panel);border:1px solid var(--border);padding:32px;margin-bottom:20px;min-height:480px;display:flex;flex-direction:column;border-radius:4px;}
+  .fields{display:flex;flex-direction:column;gap:0;flex-grow:1}
   .field-row{display:grid;grid-template-columns:100px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--border);min-height:45px}
+  .field-row:last-child{border-bottom:none}
   .field-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding-top:6px}
   .field-value{font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.4;color:#f1ecf7}
   
@@ -30,106 +39,238 @@
   .reroll-btn:hover{color:var(--accent);transform:rotate(-15deg);opacity:1}
 
   .divider{border:none;border-top:1px solid var(--border);margin:20px 0}
-  .prompt-textarea{width:100%;background:#000;border:1px solid var(--border2);color:var(--muted);font-family:var(--mono);font-size:11px;line-height:1.8;padding:14px;resize:none;min-height:100px;margin-bottom:14px;outline:none;}
+  .prompt-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .prompt-textarea{width:100%;background:#080a0c;border:1px solid var(--border2);color:var(--muted);font-family:var(--mono);font-size:11px;line-height:1.8;padding:14px;resize:none;min-height:100px;margin-bottom:14px;word-break:break-word;outline:none;border-radius:4px;}
 
   .action-bar{display:flex;gap:10px;justify-content:flex-end}
-  .copy-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);padding:10px 18px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;font-family:var(--mono);border-radius:2px}
+  .copy-btn, .save-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);padding:10px 18px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;font-family:var(--mono);transition:all .2s;border-radius:2px}
+  .copy-btn:hover, .save-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .copy-btn.active{border-color:var(--accent);background:var(--accent);color:#000}
 
-  .generate-btn{width:100%;max-width:720px;background:var(--accent);color:#000;font-weight:700;border:none;padding:22px;font-size:13px;letter-spacing:.4em;text-transform:uppercase;cursor:pointer;font-family:var(--mono);margin-bottom:40px;border-radius:4px}
+  .generate-btn{width:100%;max-width:720px;background:var(--accent);color:#000;font-weight:700;border:none;padding:22px;font-size:13px;letter-spacing:.4em;text-transform:uppercase;cursor:pointer;font-family:var(--mono);transition:all .2s;margin-bottom:40px;border-radius:4px}
+  .generate-btn:active{transform:translateY(1px);filter:brightness(0.9)}
   
+  .saved-section{width:100%;max-width:720px;border-top:1px solid var(--border);padding-top:24px}
+  .saved-title{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .saved-item{background:var(--panel);border:1px solid var(--border);padding:14px 18px;margin-bottom:10px;font-size:11px;color:var(--muted);line-height:1.7;cursor:pointer;transition:all .15s;border-radius:4px;}
+  .saved-item:hover{border-color:var(--accent);color:var(--text)}
+
   footer{margin-top:20px;font-size:9px;color:var(--dim);letter-spacing:.2em;text-align:center}
   @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
   .animate-in{animation:fadeIn .4s ease-out forwards}
+
+  @media (max-width: 600px) {
+    body { padding: 20px 15px; }
+    .card { padding: 20px; }
+    .field-row { grid-template-columns: 80px 1fr auto; }
+    .field-value { font-size: 15px; }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="eyebrow">Abstract Surface / v1.5</div>
-  <h1>Pattern <span>Architect</span></h1>
+  <div class="eyebrow">Surface Studio / v1.6 Integrated</div>
+  <h1 id="mainTitle">Pattern <span>Architect</span></h1>
   <div class="counter" id="count">0000 GENERATED</div>
 </header>
 
-<div class="card">
-  <div id="displayFields">
-    <div class="field-row"><div class="field-label">Motif</div><div class="field-value" id="v-motif">---</div><button class="reroll-btn" onclick="reroll('motif')">🔄</button></div>
-    <div class="field-row"><div class="field-label">Palette</div><div class="field-value" id="v-palette">---</div><button class="reroll-btn" onclick="reroll('palette')">🔄</button></div>
-    <div class="field-row"><div class="field-label">Vibe</div><div class="field-value" id="v-vibe">---</div><button class="reroll-btn" onclick="reroll('vibe')">🔄</button></div>
-    <div class="field-row"><div class="field-label">Details</div><div class="field-value" id="v-details">---</div><button class="reroll-btn" onclick="reroll('details')">🔄</button></div>
-  </div>
-  
-  <hr class="divider">
-  <textarea class="prompt-textarea" id="prompt" readonly placeholder="Purifying texture architecture..."></textarea>
-  <div class="action-bar">
-    <button class="copy-btn" id="copyBtn">Copy Prompt</button>
+<div class="selector-group">
+  <div class="selector-label">Surface Mode</div>
+  <div class="selector" id="styleSelector">
+    <button class="selector-btn active" data-style="kawaii">Kawaii Pop</button>
+    <button class="selector-btn" data-style="geometric">Geometric</button>
+    <button class="selector-btn" data-style="pop">Pop Art</button>
+    <button class="selector-btn" data-style="minimal">Minimal</button>
   </div>
 </div>
 
-<button class="generate-btn" id="generateBtn">GENERATE PURE PATTERN</button>
+<div class="card">
+  <div id="displayFields" class="fields">
+    <div class="field-row"><div class="field-label">Motif</div><div class="field-value" id="v-motif">---</div><button class="reroll-btn" onclick="reroll('motif')">🔄</button></div>
+    <div class="field-row"><div class="field-label">Structure</div><div class="field-value" id="v-structure">---</div><button class="reroll-btn" onclick="reroll('structure')">🔄</button></div>
+    <div class="field-row"><div class="field-label">Palette</div><div class="field-value" id="v-palette">---</div><button class="reroll-btn" onclick="reroll('palette')">🔄</button></div>
+    <div class="field-row"><div class="field-label">Vibe</div><div class="field-value" id="v-vibe">---</div><button class="reroll-btn" onclick="reroll('vibe')">🔄</button></div>
+    <div class="field-row"><div class="field-label">Details</div><div class="field-value" id="v-details">---</div><button class="reroll-btn" onclick="reroll('details')">🔄</button></div>
+    <div class="field-row"><div class="field-label">Medium</div><div class="field-value" id="v-medium">---</div><button class="reroll-btn" onclick="reroll('medium')">🔄</button></div>
+  </div>
+  
+  <hr class="divider">
+  <div class="prompt-label">Surface Design Prompt</div>
+  <textarea class="prompt-textarea" id="prompt" readonly placeholder="Select mode & build texture..."></textarea>
+  <div class="action-bar">
+    <button class="copy-btn" id="copyBtn">Copy</button>
+    <button class="save-btn" id="saveBtn" style="display:none">Save</button>
+  </div>
+</div>
 
-<footer>&copy; 2026 Studio Architect // Purified Kawaii Edition</footer>
+<button class="generate-btn" id="generateBtn">GENERATE SURFACE</button>
+
+<div class="saved-section" id="savedSection" style="display:none">
+  <div class="saved-title">Saved Textures</div>
+  <div id="savedList"></div>
+</div>
+
+<footer>&copy; 2026 Studio Architect // Integrated Clean Edition</footer>
 
 <script>
 const DATA = {
-  motif: [
-    "dreamy pastel clouds and floating stars","soft ribbon bows and lace trims","creamy dessert swirls and sprinkles","strawberry milk drops and splashes",
-    "shining magical crystals and gemstones","floating heart silhouettes","pastel unicorn silhouettes (shadow only)","confetti and tiny star dust",
-    "macaron-inspired circles and sweets","layered frills and fabric folds","puffy cotton candy textures","starry night sky gradients",
-    "creamy latte art swirls","rainbow fluid splashes","angelic feathers and light rays",
-    "glittering gemstone clusters","soft pompon textures","dreamy moon and star garlands",
-    "pastel medicine pill silhouettes","heart-shaped patch and stitch details","tear-drop crystals","yandere-style heart and thorn motifs",
-    "soft bandage-wrap textures","cracked mirror-like glass shards","90s anime-style sparkle flowers","chunky metallic heart shapes",
-    "y2k star and heart chains","colorful nail-art inspired dots","shoujo manga screen tone textures","neon glow-stick lines",
-    "pastel hair-clip shapes","abstract cat-ear and paw silhouettes","matcha-cream swirls","falling sakura petal shapes",
-    "soft serve ice cream textures","fairy-kei colorful bead strings","bioluminescent forest motifs","healing potion-style fluid bubbles",
-    "pastel jelly-fish like shapes","sweet candy-rain droplets","pudding-like cream swirls","layered ribbon mountain textures"
-  ],
-  palette: ["yumekawaii pastel explosion","strawberry milk pink & cream","cyber kawaii neon","soft girl mint & lavender","pastel goth black & pink","healing sage & blush","creamy dessert palette","90s anime bright","shoujo manga rose & mint","menhera dark kawaii","angel core white & gold","y2k metallic pink & blue"],
-  vibe: ["extremely healing and soft","hyper feminine and dreamy","chaotic cute energy","nostalgic 90s-2000s","slightly menhera and emotional","bright and energetic","elegant princess-like","street fashion kawaii","fairytale soft","slightly surreal and dreamy","maximum decora overload","gentle and comforting","playful and mischievous","pure and innocent","bittersweet and nostalgic"],
-  details: ["sparkling glitter and stars","pastel blush airbrushing","lace and ribbon embroidery","pearl and jewel accents","soft airbrushed depth","halftone heart screen tones","iridescent holographic film","puffy 3D sticker finish","delicate fabric textures","glossy jelly-like finish","pastel chromatic aberration","heart-shaped light bokeh","manga-style speech bubble frames (empty)","explosion bubble frames","thought bubble clusters"],
-  structure: ["dense seamless repeating pattern","floating scattered arrangement","diagonal candy stripe layout","bubble wrap grid","heart-shaped tessellation","uniform isometric grid","layered overlapping elements","scalloped border frame"],
-  medium: ["clean vector illustration","90s anime cel-shading style","soft pastel gouache","3D cute matte render","digital sticker sheet style","risograph print","y2k flash art style"]
+  kawaii: {
+    motif: [
+      "dreamy pastel clouds and floating stars","soft ribbon bows and lace","creamy dessert swirls and sprinkles","strawberry milk drops and splashes",
+      "shining magical crystals and gemstones","floating heart silhouettes","pastel unicorn shadow shapes","confetti and tiny star dust",
+      "macaron-inspired circles and sweets","layered frills and fabric folds","puffy cotton candy textures","starry night sky gradients",
+      "creamy latte art swirls","rainbow fluid splashes","angelic feathers and light rays","glittering gemstone clusters",
+      "soft pompon textures","dreamy moon and star garlands","pastel medicine pill silhouettes","heart-shaped patch and stitch details",
+      "broken stitches and heart patches","tear-drop crystals","yandere-style heart and thorn motifs","soft bandage-wrap textures",
+      "cracked mirror-like glass shards","90s anime-style sparkle flowers","chunky metallic heart shapes","y2k star and heart chains",
+      "colorful nail-art dots","shoujo manga screen tone patterns","neon hair-clip shapes","abstract cat-ear silhouettes",
+      "matcha-cream swirls","falling sakura petal shapes","soft serve ice cream textures","fairy-kei colorful bead strings",
+      "bioluminescent forest motifs","healing potion-style fluid bubbles","pastel jelly-fish shapes","sweet candy-rain droplets",
+      "pudding-like cream swirls","layered ribbon mountain textures"
+    ],
+    structure: ["dense seamless repeating pattern","floating scattered arrangement","diagonal candy stripe layout","bubble wrap grid","heart-shaped tessellation","random motif explosion","uniform isometric grid","layered overlapping elements","scalloped border frame","checkerboard with icons"],
+    palette: ["yumekawaii pastel explosion","strawberry milk pink & cream","cyber kawaii neon","soft girl mint & lavender","pastel goth black & pink","healing sage & blush","creamy dessert palette","90s anime bright","shoujo manga rose & mint","menhera dark kawaii","angel core white & gold","y2k metallic pink & blue"],
+    vibe: ["extremely healing and soft","hyper feminine and dreamy","chaotic cute energy","nostalgic 90s-2000s","slightly menhera and emotional","bright and energetic","elegant princess-like","street fashion kawaii","fairytale soft","slightly surreal and dreamy","maximum decora overload","gentle and comforting","playful and mischievous","pure and innocent","bittersweet and nostalgic"],
+    details: ["sparkling glitter and stars","pastel blush airbrushing","lace and ribbon embroidery","pearl and jewel accents","soft airbrushed depth","halftone heart screen tones","iridescent holographic film","puffy 3D sticker finish","delicate fabric textures","glossy jelly-like finish","pastel chromatic aberration","heart-shaped light bokeh","manga-style speech bubble frames (empty)","explosion bubble frames","thought bubble clusters"],
+    medium: ["clean vector illustration","90s anime cel-shading style","soft pastel gouache","3D cute matte render","digital sticker sheet style","risograph print","y2k flash art style"]
+  },
+  geometric: {
+    motif: ["bauhaus geometric primitives", "hexagonal honeycomb cells", "concentric circular ripples", "isometric wireframe cubes", "interlocking chevrons", "sacred geometry mandalas", "op-art optical waves"],
+    structure: ["mathematically precise grid", "radial symmetry", "dense fractal repetition", "tessellated polygon tiling", "staggered offset layout", "linear rhythmic alignment"],
+    palette: ["monochrome high-contrast", "primary colors (CMYK)", "neon cyberpunk glow", "muted clay and charcoal", "gold and matte black", "electric blue and silver"],
+    vibe: ["intellectual and structured", "aggressive and rhythmic", "complex and analytical", "stable industrial look", "dynamic architectural movement"],
+    details: ["sharp vector edges", "mathematical line precision", "subtle drop shadows", "glowing neon wireframes", "layered transparency", "technical blueprint grain"],
+    medium: ["clean vector design", "3D architectural render", "screen print style", "generative digital art", "precise plotter drawing"]
+  },
+  pop: {
+    motif: ["bold halftone dots", "y2k bling star shapes", "retro arcade pixel patterns", "vibrant sticker-style fragments", "bubblegum abstract squiggles", "comic book explosion bursts", "street graffiti texture fragments"],
+    structure: ["chaotic overlapping layers", "diagonal bold stripes", "random burst arrangement", "scattered pop icons", "tiling sticker bomb"],
+    palette: ["vivid neon synthwave", "bubblegum pink and yellow", "acid green and purple", "high-contrast red and blue", "retro 80s arcade colors"],
+    vibe: ["loud and energetic", "playful and ironic", "noisy and street", "underground pop style", "nostalgic 80s arcade"],
+    details: ["thick black ink outlines", "ben-day comic dots", "glossy plastic highlights", "chromatic aberration", "distressed paper texture", "onomatopoeia text graphics"],
+    medium: ["pop art illustration", "vintage comic print", "risograph texture", "vector sticker art", "screen print style"]
+  },
+  minimal: {
+    motif: ["subtle terrazzo specks", "thin topographic lines", "sashiko stitch marks", "soft gradient grain", "microscopic dot grid", "gentle organic ripples"],
+    structure: ["sparse open layout", "uniform micro-grid", "seamless subtle tiling", "asymmetric negative space", "perfectly balanced emptiness"],
+    palette: ["muted wabi-sabi tones", "warm beige and linen", "cool slate and ash", "monochrome ink wash", "pale oat and charcoal"],
+    vibe: ["silent and pure", "sophisticated and calm", "airy and structured", "precise and tranquil", "modernist emptiness"],
+    details: ["ultra-fine thin lines", "matte paper texture", "soft-focus blurred edges", "perfect negative space", "subtle depth and shadow"],
+    medium: ["minimalist vector art", "subtle 3D texture", "pencil and graphite sketch", "riso-print aesthetic", "clean digital surface"]
+  }
 };
 
-let count = parseInt(localStorage.getItem('arch_count_v15') || '0', 10);
+const CONFIG = {
+  kawaii: { accent: '#ff8ad4', label: 'Kawaii' },
+  geometric: { accent: '#38bdf8', label: 'Geometric' },
+  pop: { accent: '#fbbf24', label: 'Pop Art' },
+  minimal: { accent: '#94a3b8', label: 'Minimal' }
+};
+
+let selectedStyle = 'kawaii';
+let current = {};
+let count = parseInt(localStorage.getItem('arch_count_v16') || '0', 10);
+
 const $ = id => document.getElementById(id);
 const rand = arr => arr[Math.floor(Math.random()*arr.length)];
 
+function updateCount() {
+  $('count').textContent = count.toString().padStart(4, '0') + " GENERATED";
+  localStorage.setItem('arch_count_v16', count);
+}
+
+function setStyle(key) {
+  selectedStyle = key;
+  const config = CONFIG[key];
+  document.documentElement.style.setProperty('--accent', config.accent);
+  document.querySelectorAll('.selector-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.style === key);
+  });
+  $('mainTitle').querySelector('span').textContent = config.label;
+}
+
 function renderFields() {
-  const fields = ['motif', 'palette', 'vibe', 'details'];
+  if(!current.motif) return;
+  const accent = CONFIG[selectedStyle].accent;
+  const fields = ['motif', 'structure', 'palette', 'vibe', 'details', 'medium'];
+  
   fields.forEach(f => {
     const el = $(`v-${f}`);
     el.textContent = current[f];
+    el.style.color = (f === 'motif' || f === 'palette') ? accent : "var(--text)";
     el.closest('.field-row').classList.remove('animate-in');
     void el.offsetWidth;
     el.closest('.field-row').classList.add('animate-in');
   });
-  const p = `${current.motif}, ${rand(DATA.structure)}, color palette: ${current.palette}, ${current.details}, vibe: ${current.vibe}, ${rand(DATA.medium)}, seamless repeating pattern, high quality surface design, NO characters, NO humans, NO faces, NO toys, NO devices, object-based kawaii pattern, 8k resolution`;
+
+  const p = `${current.motif}, ${current.structure}, color palette: ${current.palette}, ${current.details}, vibe: ${current.vibe}, ${current.medium}, seamless repeating pattern, high quality surface design, NO characters, NO people, NO faces, NO humans, NO toys, NO devices, object-based pattern only, 8k resolution`;
   $('prompt').value = p;
+  $('saveBtn').style.display = "block";
 }
 
 function generate() {
-  current = { motif: rand(DATA.motif), palette: rand(DATA.palette), vibe: rand(DATA.vibe), details: rand(DATA.details) };
+  const d = DATA[selectedStyle];
+  current = {
+    motif: rand(d.motif), structure: rand(d.structure), palette: rand(d.palette),
+    vibe: rand(d.vibe), details: rand(d.details), medium: rand(d.medium)
+  };
   count++;
-  $('count').textContent = count.toString().padStart(4, '0') + " GENERATED";
-  localStorage.setItem('arch_count_v15', count);
+  updateCount();
   renderFields();
 }
 
 function reroll(field) {
   if(!current.motif) return;
-  current[field] = rand(DATA[field]);
+  current[field] = rand(DATA[selectedStyle][field]);
   renderFields();
 }
 
+function save() {
+  const p = $('prompt').value;
+  if(!p) return;
+  let saved = JSON.parse(localStorage.getItem('arch_saved_v16') || '[]');
+  if(saved.includes(p)) return;
+  saved.unshift(p);
+  localStorage.setItem('arch_saved_v16', JSON.stringify(saved.slice(0, 20)));
+  renderSaved();
+}
+
+function renderSaved() {
+  const saved = JSON.parse(localStorage.getItem('arch_saved_v16') || '[]');
+  if(saved.length === 0) return;
+  $('savedSection').style.display = 'block';
+  $('savedList').innerHTML = saved.map(p => `<div class="saved-item">${p}</div>`).join('');
+  document.querySelectorAll('.saved-item').forEach(el => {
+    el.onclick = () => {
+      navigator.clipboard.writeText(el.textContent);
+      el.style.borderColor = "var(--accent)";
+      setTimeout(() => el.style.borderColor = "var(--border)", 500);
+    };
+  });
+}
+
+document.querySelectorAll('.selector-btn').forEach(btn => {
+  btn.onclick = () => setStyle(btn.dataset.style);
+});
+
 $('generateBtn').onclick = generate;
+$('saveBtn').onclick = save;
 $('copyBtn').onclick = async () => {
-  await navigator.clipboard.writeText($('prompt').value);
+  const t = $('prompt').value;
+  if(!t) return;
+  await navigator.clipboard.writeText(t);
   $('copyBtn').textContent = "COPIED";
-  setTimeout(() => $('copyBtn').textContent = "COPY PROMPT", 1000);
+  $('copyBtn').classList.add('active');
+  setTimeout(() => {
+    $('copyBtn').textContent = "COPY";
+    $('copyBtn').classList.remove('active');
+  }, 1000);
 };
 
-$('count').textContent = count.toString().padStart(4, '0') + " GENERATED";
+updateCount();
+renderSaved();
+setStyle('kawaii');
 </script>
 </body>
 </html>
